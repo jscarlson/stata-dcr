@@ -85,7 +85,7 @@ Options
 
 ^psd^ forces the final variance-covariance matrix to be positive semi-definite.
 
-^dyadid^(string) supplies a custom dyad identifier to the ^dcr^; when left
+^dyadid^(string) supplies a custom dyad identifier to ^dcr^; when left
     unspecified, ^dcr^ creates its own undirected dyad identifier from ^dm1^
     and ^dm2^ (recommended).
  
