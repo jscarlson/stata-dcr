@@ -6,7 +6,7 @@ help for ^dcr^
 --------------------------------------------------------
 
     ^dcr^ command depvar indepvars [if] [in] [weight] , ^dm1^(string)
-	^dm2^(string) [options]
+	^dm2^(string) ^dofundo^(string) [options]
 
 Description
 -----------
@@ -14,9 +14,26 @@ Description
 ^dcr^ implements a robust variance estimator for dyadic data as discussed 
 by Aronow et al. (2015). ^dcr^ takes as arguments a Stata estimation 
 command (^command^); dependent variable (^depvar^); independent variable 
-list (^indepvars^); and dyad member indicator variables (^dm1^, ^dm2^). It 
-returns model parameter estimates with dyadic clustering robust standard 
-errors (DCRSEs).
+list (^indepvars^); dyad member indicator variables (^dm1^, ^dm2^); and an
+indicator of the type of degrees-of-freedom correction performed by ^command^
+(^dofundo^). It returns model parameter estimates with dyadic clustering 
+robust standard errors (DCRSEs).
+
+To reiterate, ^dofundo^(string) specifies the type of degrees-of-freedom
+correction performed by ^command^. This information is used to undo 
+degrees-of-freedom corrections that are, in this context, inappropriately 
+performed by default by Stata for intermediate computations of the multiway
+decomposition of DCRSEs. A failure to correctly specify this option will
+lead to incorrect DCRSEs. Options that can be supplied o ^dofundo^ include:
+
+    "none"    | No degrees-of-freedom correction                 [default]
+    ------------------------------------------------------------
+    "reglike" | "Regression-like" degrees-of-freedom correction, 
+              |  i.e., ((N-1)/(N-k))*(M/(M-1))
+    ------------------------------------------------------------
+    "asylike" | "Asymptotic-like" degrees-of-freedom correction,
+              |  i.e., M/(M-1)
+
 
 Due to idiosyncrasies associated with Stata's cluster robust variance 
 estimation when strata (or groups) are specified by a model, certain 
@@ -28,23 +45,8 @@ Note: ^sortrows^ is a dependency of ^dcr^. It can be installed via:
 Options
 -------
 
-^dofundo^(string) specifies the type of degrees-of-freedom correction 
-    performed by ^command^; this information is used to undo 
-    degrees-of-freedom corrections that are, in this context, inappropriately 
-    performed by default for intermediate computations of the multi-way 
-    decomposition of DCRSEs. A failure to correctly specify this option will
-    lead to incorrect DCR variance estimates.
-
-    "none"    | No degrees-of-freedom correction                 [default]
-    ------------------------------------------------------------
-    "reglike" | "Regression-like" degrees-of-freedom correction, 
-              |  i.e., ((N-1)/(N-k))*(M/(M-1))
-    ------------------------------------------------------------
-    "asylike" | "Asymptotic-like" degrees-of-freedom correction,
-              |  i.e., M/(M-1)
-
 ^dofcorr^ applies a small sample correction to the final estimates of 
-    DCR standard errors. This correction is equivalent to multiplying 
+    DCRSEs. This correction is equivalent to multiplying 
     the final estimates of standard error by sqrt(N/(N-1)), where N is 
     the number of unique dyad members in the analytic sample. Correspondingly,
     when computing p-values, the test statistic is compared to a t-distribution 
@@ -71,17 +73,21 @@ Options
 
 ^rse^ specifies that a robust standard error (RSE) should be computed 
     in addition to a DCRSE, e.g., for the purpose of calculating the ratio 
-    of DCRSE/RSE. This RSE is only output to the Excel spreadsheet created
+    of DCRSE to RSE. This RSE is only output to the Excel spreadsheet created
     by ^xlsxpath^. When ^dofcorr^ is also turned on, an analogous small 
     sample correction is applied to this RSE estimate.
 
 ^crse^(string) specifies that a cluster robust standard error (CRSE) should
     be computed in addition to a DCRSE, e.g., for the purpose of calculating
-    the ratio of DCRSE/CRSE. This CRSE is only output to the Excel spreadsheet
+    the ratio of DCRSE to CRSE. This CRSE is only output to the Excel spreadsheet
     created by ^xlsxpath^. When ^dofcorr^ is also turned on, an analogous 
     small sample correction is applied to this CRSE estimate. 
 
 ^psd^ forces the final variance-covariance matrix to be positive semi-definite.
+
+^dyadid^ supplies a custom dyad identifier to the ^dcr^; when left unspecified, 
+    ^dcr^ creates its own undirected dyad identifier from ^dm1^ and ^dm2^ 
+    (recommended).
  
 Example
 -------
@@ -90,7 +96,8 @@ To compute DCR standard errors associated with a logistic regression
 model (and to compare them to a repeated dyad CRSE), one might type
 
     . dcr logit y x1 x2 if year>1900, dm1(dyadmember1) dm2(dyadmember2)
-        dofundo(asylike) dofcorr psd chardm xlsxpath(~/Downloads/mydcr.xlsx)
+        dofundo(asylike) dofcorr psd chardm crse(dyad)
+        xlsxpath(~/Downloads/mydcr.xlsx)
 
 Reference
 ---------

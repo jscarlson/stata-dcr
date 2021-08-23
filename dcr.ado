@@ -13,7 +13,7 @@ capture program drop dcr
 program dcr, eclass
 
 version 15
-syntax anything(id="command line" name=command_line) [if] [in] [fweight aweight pweight iweight], DM1(varname) DM2(varname) [DOFUndo(string) XLSXPATH(string) RSE CRSE(string) SYNTAX(string) PREFIX(string) PSD CHARdm DOFCorr DYADID(string) *]
+syntax anything(id="command line" name=command_line) [if] [in] [fweight aweight pweight iweight], DM1(varname) DM2(varname) DOFUndo(string) [XLSXPATH(string) RSE CRSE(string) SYNTAX(string) PREFIX(string) PSD CHARdm DOFCorr DYADID(string) *]
 
 * -----------------------------------------------
 * Create options
