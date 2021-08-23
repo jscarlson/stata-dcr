@@ -3,7 +3,7 @@ help for ^dcr^
 .-
 
 ^[BETA]^ Dyadic Clustering Robust (DCR) Variance Estimation
---------------------------------------------------------
+---------------------------------------------------------
 
     ^dcr^ command depvar indepvars [if] [in] [weight] , ^dm1^(string)
 	^dm2^(string) ^dofundo^(string) [options]
@@ -85,9 +85,9 @@ Options
 
 ^psd^ forces the final variance-covariance matrix to be positive semi-definite.
 
-^dyadid^ supplies a custom dyad identifier to the ^dcr^; when left unspecified, 
-    ^dcr^ creates its own undirected dyad identifier from ^dm1^ and ^dm2^ 
-    (recommended).
+^dyadid^(string) supplies a custom dyad identifier to the ^dcr^; when left
+    unspecified, ^dcr^ creates its own undirected dyad identifier from ^dm1^
+    and ^dm2^ (recommended).
  
 Example
 -------
