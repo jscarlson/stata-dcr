@@ -180,7 +180,7 @@ matrix vcov = vcov - ((N_ud - 2)*unadjust*vhet)
 * -----------------------------------------------
 
 di
-_dots 0, title(Computing Dyad Member CRSEs) reps(`N_ud')
+_dots 0, title("Multiway decomposition computation in progress!") reps(`N_ud')
 
 foreach v in `unique_dyadmem' {
 
