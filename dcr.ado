@@ -16,6 +16,18 @@ version 15
 syntax anything(id="command line" name=command_line) [if] [in] [fweight aweight pweight iweight], DM1(varname) DM2(varname) DOFUndo(string) [XLSXPATH(string) RSE CRSE(string) SYNTAX(string) PREFIX(string) PSD CHARdm DOFCorr DYADID(string) *]
 
 * -----------------------------------------------
+* Check for sortrows
+* -----------------------------------------------
+
+qui findfile sortrows.ado
+
+if "`r(fn)'" == "" {
+	di as txt "user-written package sortrows needs to be installed first;"
+	di as txt "use -ssc install sortrows- to do that"
+	exit 498
+}
+
+* -----------------------------------------------
 * Create options
 * -----------------------------------------------
 
