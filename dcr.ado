@@ -19,11 +19,11 @@ syntax anything(id="command line" name=command_line) [if] [in] [fweight aweight 
 * Check for sortrows
 * -----------------------------------------------
 
-qui findfile sortrows.ado
+capture findfile sortrows.ado
 
 if "`r(fn)'" == "" {
-	di as txt "user-written package sortrows needs to be installed first;"
-	di as txt "use -ssc install sortrows- to do that"
+	di as txt "User-written package sortrows needs to be installed first;"
+	di as txt "use -ssc install sortrows- to do that."
 	exit 498
 }
 
