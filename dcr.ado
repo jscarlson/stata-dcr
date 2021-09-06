@@ -134,7 +134,8 @@ else if "`syntax'" == "robustCluster" {
 
 _ms_omit_info e(b)
 scalar N_omit = r(k_omit)
-scalar N_par = colsof(e(V)) - N_omit
+matrix temp_V = e(V)
+scalar N_par = colsof(temp_V) - N_omit
 scalar N_did = e(N_clust)
 if N_did == . {
 	qui unique `did' if `touse'
@@ -172,7 +173,8 @@ else if "`syntax'" == "robustCluster" {
 _ms_omit_info e(b)
 scalar N_omit = r(k_omit)
 scalar N_obs = e(N)
-scalar N_par = colsof(e(V)) - N_omit
+matrix temp_V = e(V)
+scalar N_par = colsof(temp_V) - N_omit
 matrix vhet = e(V)
 
 if "`dofundo'"=="reglike" {
@@ -214,7 +216,8 @@ foreach v in `unique_dyadmem' {
 
 	_ms_omit_info e(b)
 	scalar N_omit = r(k_omit)
-	scalar N_par = colsof(e(V)) - N_omit
+	matrix temp_V = e(V)
+	scalar N_par = colsof(temp_V) - N_omit
 	scalar N_dyad_`v' = e(N_clust)
 	if N_dyad_`v' == . {
     		qui unique `contains_`v'' if `touse'
